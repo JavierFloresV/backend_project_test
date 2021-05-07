@@ -17,12 +17,19 @@
                         <td scope="row"> {{ $post->id }}</td>
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->author }}</td>
-                        <td> editar | borrar </td>
+                        <td>
+                            <a href="{{ route("post.edit", $post->id) }}" class="btn btn-sm btn-primary">EDITAR</a>
+                            <form action="{{ route("post.destroy", $post->id )}}" method="post">
+                                {{ csrf_field() }}
+                                {{ method_field("DELETE") }}
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('delete the entry?')">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             @else
                 <tr>
-                    <td scope="row"> {{ "no se encontró resultados" }} </td>
+                    <td scope="row"> {{ "no entries found" }} </td>
                 </tr>
             @endif
 

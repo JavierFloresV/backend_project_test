@@ -29,23 +29,29 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
      *
+     * Store a newly created resource in storage.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
     {
-        //
+        //$data = $request->all();
+
+        $data = $request->except('_token');
+        Post::insert($data);
+        return redirect()->route('post.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\post  $post
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(post $post)
+    public function show(Post $post)
     {
         //
     }
@@ -53,34 +59,38 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\post  $post
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(post $post)
+    public function edit($id)
     {
-        return view('post.edit');
+        $data = Post::findOrFail($id);
+        return view("post.edit")->with(["post" => $data]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\post  $post
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, post $post)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $request->except('_token', '_method');
+        Post::where('id','=', $id)->update($data);
+        return redirect()->route("post.index");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\post  $post
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(post $post)
+    public function destroy($id)
     {
-        //
+        Post::destroy($id);
+        return redirect()->route("post.index");
     }
 }
