@@ -26,6 +26,7 @@
             <tr>
                 <th>{{ "ID" }}</th>
                 <th>{{ "IMAGEN" }}</th>
+                <th>{{ "CATEGORY" }}</th>
                 <th>{{ "TITLE" }}</th>
                 <th>{{ "AUTHOR" }}</th>
                 <th>{{ "ACTIONS" }}</th>
@@ -37,6 +38,7 @@
                     <tr>
                         <td scope="row"> {{ $post->id }}</td>
                         <td scope="row"> <img src="{{ asset('storage').'/'.$post->image }}" width="80" height="80"></td>
+                        <td scope="row">{{ $post->category->name }}</td>
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->author }}</td>
                         <td>

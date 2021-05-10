@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,8 +25,10 @@ class PostController extends Controller
         //$data = $request->all();
         $data = $request->input('search');
         $query = Post::select()
+            ->join('categories as cat', 'posts.category_id', '=', 'cat.id')
             ->where('title', 'like', "%$data%")
             ->orWhere('author', 'like', "%$data%")
+            ->orWhere('cat.name', 'like', "%$data%")
             ->get();
         return view("post.index")->with(["posts" => $query]);
 
@@ -38,7 +41,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        $categories = Category::all();
+        return view("post.create")->with(["categories" => $categories]);
     }
 
     /**
@@ -81,7 +85,8 @@ class PostController extends Controller
     public function edit($id)
     {
         $data = Post::findOrFail($id);
-        return view("post.edit")->with(["post" => $data]);
+        $categories = Category::all();
+        return view("post.edit")->with(["post" => $data, "categories" => $categories]);
     }
 
     /**

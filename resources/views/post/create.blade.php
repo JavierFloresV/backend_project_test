@@ -9,6 +9,15 @@
         <label for="title" class="form-label">Title</label>
         <input type="text" class="form-control" id="title" name="title">
     </div>
+    <div class="form-group has-feedback">
+        <label class="form-label">Category</label>
+        <select name="category_id" class="form-select" required>
+            <option value="">Select Category</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
+    </div>
     <div>
         <label for="image" class="form-label">Image</label>
         <input type="file" class="form-control" id="image" name="image">
