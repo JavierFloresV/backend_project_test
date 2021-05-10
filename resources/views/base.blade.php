@@ -9,7 +9,7 @@
         <title>@yield('title')</title>
     </head>
     <body>
-        {{-- @include('components.header') --}}
+        @include('components.header')
         <div class="container">
             {{-- @include('components.alert') --}}
             @yield('content')

@@ -2,7 +2,7 @@
 @section('title') Post Create @endsection
 @section('content')
 
-<form action="{{ route('post.store') }}" method="post">
+<form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
 
     <div class="mb-3">
@@ -11,7 +11,7 @@
     </div>
     <div>
         <label for="image" class="form-label">Image</label>
-        <input type="text" class="form-control" id="image" name="image">
+        <input type="file" class="form-control" id="image" name="image">
     </div>
     <div class="mb-3">
         <label for="summary" class="form-label">Summary</label>

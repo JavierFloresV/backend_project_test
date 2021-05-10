@@ -2,7 +2,7 @@
 @section('title') Post Edit @endsection
 @section('content')
 
-<form action="{{ route('post.update', $post->id) }}" method="post">
+<form action="{{ route('post.update', $post->id) }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     {{ method_field("PATCH") }}
 
@@ -12,7 +12,7 @@
     </div>
     <div>
         <label for="image" class="form-label">Image</label>
-        <input type="text" class="form-control" id="image" name="image" value="{{ $post->image }}">
+        <input type="file" class="form-control" id="image" name="image" value="{{ $post->image }}">
     </div>
     <div class="mb-3">
         <label for="summary" class="form-label">Summary</label>
