@@ -15,8 +15,14 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data['categories'] = Category::paginate(5);
+        $data['categories'] = Category::all();
         return view("category.index", $data);
+    }
+
+    public function list()
+    {
+        $data = Category::all();
+        return response()->json($data, 200);
     }
 
     public function search(Request $request)
