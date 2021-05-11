@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,19 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data['categories'] = Category::paginate(5);
+        return view("category.index", $data);
+    }
+
+    public function search(Request $request)
+    {
+        //$data = $request->all();
+        $data = $request->input('search');
+        $query = Category::select()
+            ->where('name','like',"%$data%")
+            ->get();
+
+        return view("category.index")->with(["categories" => $query]);
     }
 
     /**
@@ -24,7 +37,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view("category.create")->with(["categories" => $categories]);
     }
 
     /**
@@ -35,7 +49,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$data = $request->all();
+        $data = $request->except('_token');
+        Category::insert($data);
+        Session::flash('alert-success', 'Successful category creation');
+        return redirect()->route("category.index");
     }
 
     /**
@@ -55,9 +73,10 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $data = Category::findOrFail($id);
+        return view("category.edit")->with(["category" => $data]);
     }
 
     /**
@@ -67,9 +86,12 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $request->except('_token','_method');
+        Category::where('id','=', $id)->update($data);
+        Session::flash('alert-success', 'Successful category update');
+        return redirect()->route("category.index");
     }
 
     /**
@@ -78,8 +100,10 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        Category::destroy($id);
+        Session::flash('alert-warning', 'Successful delete');
+        return redirect()->route("category.index");
     }
 }

@@ -14,7 +14,7 @@
         <div class="input-group">
             <input class="form-control" type="text" name="search" placeholder="Search">
             <span class="input-group-btn">
-                <button class="btn btn-outline-success" type="submit"><span class="fas fa-search" aria-hidden="true">Search</span></button>
+                <button class="btn btn-light" type="submit"><span class="fas fa-search" aria-hidden="true">Search</span></button>
             </span>
         </div>
       </form>
@@ -42,7 +42,7 @@
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->author }}</td>
                         <td>
-                            <a href="{{ route("post.edit", $post->id) }}" class="btn btn-sm btn-primary">EDITAR</a>
+                            <a href="{{ route("post.edit", $post->id) }}" class="btn btn-sm btn-secondary">EDITAR</a>
                             <form action="{{ route("post.destroy", $post->id )}}" method="post">
                                 {{ csrf_field() }}
                                 {{ method_field("DELETE") }}

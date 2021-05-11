@@ -6,6 +6,7 @@ use App\Post;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
@@ -62,6 +63,7 @@ class PostController extends Controller
             $data['image'] = $request->file('image')->store('uploads', 'public');
         }
         Post::insert($data);
+        Session::flash('alert-success', 'Successful post creation');
         return redirect()->route('post.index');
     }
 
@@ -105,6 +107,7 @@ class PostController extends Controller
             $data['image'] = $request->file('image')->store('uploads', 'public');
         }
         Post::where('id','=', $id)->update($data);
+        Session::flash('alert-success', 'Successful post update');
         return redirect()->route("post.index");
     }
 
@@ -117,6 +120,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         Post::destroy($id);
+        Session::flash('alert-warning', 'Successful delete');
         return redirect()->route("post.index");
     }
 }
